@@ -1,31 +1,44 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
-
-export default function TabTwoScreen() {
+import { FlatList, TextInput, View, StyleSheet } from 'react-native';
+import { tracks } from '../../../assets/data/tracks';
+import TrackListItem from '../../components/TrackListItem';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useState } from 'react';
+import { FontAwesome } from '@expo/vector-icons';
+import { Text } from '../../components/Themed';
+export default function SearchScreen() {
+  const [search, setSearch] = useState('');
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
-    </View>
+    <SafeAreaView>
+      <View style={styles.header}>
+        <FontAwesome name="search" size={16} color={'gray'} />
+        <TextInput
+          placeholder="What do you want to listen to?"
+          style={styles.input}
+          value={search}
+          onChangeText={setSearch}
+        />
+        <Text onPress={() => setSearch('')}>Cancel</Text>
+      </View>
+      <FlatList
+        data={tracks}
+        renderItem={({ item }) => <TrackListItem track={item} />}
+        showsVerticalScrollIndicator={false}
+      />
+    </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  header: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    padding: 10,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  input: {
+    flex: 1,
+    backgroundColor: '#121314',
+    padding: 8,
+    borderRadius: 5,
+    marginHorizontal: 10,
+    color: 'white',
   },
 });
