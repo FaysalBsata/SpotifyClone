@@ -1,10 +1,10 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { tracks } from '../../assets/data/tracks';
-const track = tracks[0];
+import { usePlayerContext } from '../providers/PlayerProvider';
 
 const Player = () => {
+  const { track } = usePlayerContext();
   if (!track) {
     return null;
   }
